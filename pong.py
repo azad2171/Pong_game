@@ -1,22 +1,35 @@
 import pygame
 import sys
 
+class Player(pygame.Rect):
+    def __init__(self):
+        # self.paddle = pygame.Rect(0, 0, 30, 30)
+        self.left, self.top, self.width, self.height = 0, 0, 30, 30
+        self.score = 0
+        self.speed = 0
+
 class PongGame:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
+
         self.ball = pygame.Rect(0, 0, 30, 30)
         self.ball.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.ball_speed_x = 6
         self.ball_speed_y = 6
-        self.player_left = pygame.Rect(0, 0, 20, 100)
+
+        self.player_left = Player()
+        self.player_right = Player()
+
         self.player_left.midleft = (5, SCREEN_HEIGHT / 2)
-        self.player_right = pygame.Rect(0, 0, 20, 100)
         self.player_right.midright = (SCREEN_WIDTH - 5, SCREEN_HEIGHT / 2)
-        self.player_right_speed = 0
+
         self.player_left_speed = 0
+        self.player_right_speed = 0
         self.player_speed_increment = 6
+
+        
 
     def run(self):
         while True:
