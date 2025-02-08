@@ -15,6 +15,7 @@ class PongGame:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
 
+
         self.ball = pygame.Rect(0, 0, 30, 30)
         self.ball.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.ball_speed_x = 6
@@ -27,6 +28,8 @@ class PongGame:
         self.player_right.midright = (SCREEN_WIDTH - 5, SCREEN_HEIGHT / 2)
 
         self.player_speed_increment = 6
+
+        
 
         
 
@@ -107,3 +110,4 @@ if __name__ == "__main__":
     SCREEN_HEIGHT = 800
     game = PongGame(SCREEN_WIDTH, SCREEN_HEIGHT)
     game.run()
+
