@@ -76,7 +76,7 @@ class PongGame:
         self.ball.x += self.ball_speed_x
         self.ball.y += self.ball_speed_y
 
-        if self.ball.bottom >= self.screen.get_width() or self.ball.top <= 0:
+        if self.ball.bottom >= self.screen.get_height() or self.ball.top <= 0:
             self.ball_speed_y *= -1
 
         if self.ball.colliderect(self.player_left) or self.ball.colliderect(self.player_right):
