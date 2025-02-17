@@ -1,7 +1,7 @@
 from pong import PongGame
 import pygame
 import numpy as np
-
+import sys
 
 class PongRL(PongGame):
     def __init__(self, SCREEN_WIDTH=1280, SCREEN_HEIGHT=800):
@@ -21,24 +21,34 @@ class PongRL(PongGame):
         self.done = False
 
     def handle_keydown(self, event):
-        # if event.key == pygame.K_UP:
-        #     self.player_right.speed = -self.player_speed_increment
-        # if event.key == pygame.K_DOWN:
-        #     self.player_right.speed = self.player_speed_increment
-        if event.key == pygame.K_w:
-            self.player_left.speed = -self.player_speed_increment
-        if event.key == pygame.K_s:
-            self.player_left.speed = self.player_speed_increment
+        if event.key == pygame.K_UP:
+            self.player_right.speed = -self.player_speed_increment
+        if event.key == pygame.K_DOWN:
+            self.player_right.speed = self.player_speed_increment
+        # if event.key == pygame.K_w:
+        #     self.player_left.speed = -self.player_speed_increment
+        # if event.key == pygame.K_s:
+        #     self.player_left.speed = self.player_speed_increment
 
     def handle_keyup(self, event):
-        # if event.key == pygame.K_UP:
-        #     self.player_right.speed = 0
-        # if event.key == pygame.K_DOWN:
-        #     self.player_right.speed = 0
-        if event.key == pygame.K_w:
-            self.player_left.speed = 0
-        if event.key == pygame.K_s:
-            self.player_left.speed = 0
+        if event.key == pygame.K_UP:
+            self.player_right.speed = 0
+        if event.key == pygame.K_DOWN:
+            self.player_right.speed = 0
+        # if event.key == pygame.K_w:
+        #     self.player_left.speed = 0
+        # if event.key == pygame.K_s:
+        #     self.player_left.speed = 0
+    
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                self.handle_keydown(event)
+            if event.type == pygame.KEYUP:
+                self.handle_keyup(event)
 
 
     def step(self, action):
@@ -76,7 +86,20 @@ class PongRL(PongGame):
             self.ball_speed_x *= -1
             self.reward = 1
         
+    def control_left_player(self):
+        # move up if ball is in the upper half of the screen else move down
+        increased_speed_multiplier = 1
+        self.player_left.speed = -self.player_speed_increment * increased_speed_multiplier if self.ball.y < self.player_left.y else  self.player_speed_increment * increased_speed_multiplier
 
+    def run(self):
+        while True:
+            self.handle_events()
+            self.animate_ball()
+            self.animate_players()
+            self.control_left_player()
+            self.draw_objects()
+            pygame.display.update()
+            self.clock.tick(60)
 
 
 if __name__ == "__main__":

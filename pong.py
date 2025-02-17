@@ -14,8 +14,9 @@ class PongGame:
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
+        FONT = pygame.font.Font(None, 40)
 
-
+        
         self.ball = pygame.Rect(0, 0, 30, 30)
         self.ball.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.ball_speed_x = 6
@@ -29,8 +30,11 @@ class PongGame:
 
         self.player_speed_increment = 6
 
+        self.player_left_score_label = FONT.render(str(self.player_left.score), True, 'white')
+        self.player_right_score_label = FONT.render(str(self.player_right.score), True, 'white')
+        self.screen.blit(self.player_left_score_label, (SCREEN_WIDTH/4, 10))
+        self.screen.blit(self.player_right_score_label, (3*SCREEN_WIDTH/4, 10))
         
-
         
 
     def run(self):
@@ -79,7 +83,7 @@ class PongGame:
         if self.ball.bottom >= self.screen.get_height() or self.ball.top <= 0:
             self.ball_speed_y *= -1
 
-        if self.ball.colliderect(self.player_left) or self.ball.colliderect(self.player_right):
+        if self.ball.collidepoint(self.player_left) or self.ball.colliderect(self.player_right):
             self.ball_speed_x *= -1
 
     def animate_players(self):
